@@ -10,17 +10,19 @@
         android:layout_height="wrap_content"
         android:textSize="35sp"
         android:textColor="@android:color/black"
+        android:background="@android:color/darker_gray"
         android:gravity="center_vertical|right"
-        android:paddingRight="60dp"
-        android:ems="10"
-        android:text="0.0"/>
+        android:paddingRight="20dp"
+        android:ems="6"
+        android:text="000000.0"/>
 
     <CheckBox
         android:id="@+id/box_Tare"
         android:layout_below="@+id/text_Weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_toLeftOf="@+id/box_Stable"
+        android:layout_marginRight="20dp"
         android:button="@null"
         android:gravity="center"
         android:drawableTop="@drawable/state_selector"
@@ -31,8 +33,8 @@
         android:layout_below="@+id/text_Weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/box_Tare"
-        android:layout_marginLeft="20dp"
+        android:layout_toLeftOf="@+id/box_Zero"
+        android:layout_marginRight="20dp"
         android:button="@null"
         android:gravity="center"
         android:drawableTop="@drawable/state_selector"
@@ -41,40 +43,49 @@
     <CheckBox
         android:id="@+id/box_Zero"
         android:layout_below="@+id/text_Weight"
+        android:layout_alignRight="@+id/text_Weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/box_Stable"
-        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:button="@null"
         android:gravity="center"
         android:drawableTop="@drawable/state_selector"
         android:text="去皮"/>
 
     <Button
+        android:id="@+id/btn_Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/text_Weight"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:text="启动" />
+
+    <Button
+        android:id="@+id/btn_Remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_Add"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:text="移除" />
+
+    <Button
         android:id="@+id/btn_Tare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_Weight"
-        android:layout_toRightOf="@+id/box_Zero"
-        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/btn_Remove"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
         android:text="去皮" />
 
     <Button
         android:id="@+id/btn_Zero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_Weight"
         android:layout_toRightOf="@+id/btn_Tare"
-        android:layout_marginLeft="10dp"
-        android:text="置零" />
-
-    <Button
-        android:id="@+id/btn_Edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/text_Weight"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"
-        android:text="修改" />
+        android:text="置零" />
 
 </RelativeLayout>

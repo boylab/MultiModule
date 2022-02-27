@@ -23,7 +23,7 @@ public class Command {
     public static final int clearRate  = 0x0E;*/
 
     private static HashMap<Integer, ReqModbus> CMD = new HashMap<Integer, ReqModbus>(){{
-        put(readInfo,   new ReqModbus(readInfo,0x04, 0x0000, 35));
+        put(readInfo,   new ReqModbus(readInfo,0x04, 0x0000, 8));
        /* put(readCiols,  new ReqModbus(readCiols,0x01, 0x0000, 0));
         put(writeCiol,  new ReqModbus(writeCiol,0x05, 0x0000, 0));
         put(writeCiols, new ReqModbus(writeCiols,0x0F, 0x0000, 0));

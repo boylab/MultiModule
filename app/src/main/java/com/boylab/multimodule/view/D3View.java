@@ -16,7 +16,7 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
 
     private TextView text_Weight;
     private CheckBox box_Tare,box_Stable,box_Zero;
-    private Button btn_Tare, btn_Zero, btn_Edit;
+    private Button btn_Add, btn_Remove, btn_Tare, btn_Zero;
 
     private OnViewCallBack onViewCallBack;
 
@@ -42,13 +42,16 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
         box_Tare = rootView.findViewById(R.id.box_Tare);
         box_Stable = rootView.findViewById(R.id.box_Stable);
         box_Zero = rootView.findViewById(R.id.box_Zero);
+
+        btn_Add = rootView.findViewById(R.id.btn_Add);
+        btn_Remove = rootView.findViewById(R.id.btn_Remove);
         btn_Tare = rootView.findViewById(R.id.btn_Tare);
         btn_Zero = rootView.findViewById(R.id.btn_Zero);
-        btn_Edit = rootView.findViewById(R.id.btn_Edit);
 
+        btn_Add.setOnClickListener(this);
+        btn_Remove.setOnClickListener(this);
         btn_Tare.setOnClickListener(this);
         btn_Zero.setOnClickListener(this);
-        btn_Edit.setOnClickListener(this);
     }
 
     public void setOnViewCallBack(OnViewCallBack onViewCallBack) {
@@ -60,7 +63,15 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
         if (ViewClick.isFastClick()){
             return;
         }
-        if (view.getId() == R.id.btn_Tare){
+        if (view.getId() == R.id.btn_Add){
+            if (onViewCallBack != null){
+                onViewCallBack.onViewAdd();
+            }
+        }else if (view.getId() == R.id.btn_Remove){
+            if (onViewCallBack != null){
+                onViewCallBack.onViewRemove();
+            }
+        }else if (view.getId() == R.id.btn_Tare){
             if (onViewCallBack != null){
                 onViewCallBack.onViewTare();
             }
@@ -68,16 +79,14 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
             if (onViewCallBack != null){
                 onViewCallBack.onViewZero();
             }
-        }else if (view.getId() == R.id.btn_Edit){
-            if (onViewCallBack != null){
-                onViewCallBack.onViewEdit();
-            }
         }
     }
 
     public interface OnViewCallBack{
+        void onViewAdd();
+        void onViewRemove();
         void onViewTare();
         void onViewZero();
-        void onViewEdit();
+
     }
 }

@@ -33,9 +33,9 @@ public class SerialWrapper implements SerialPortWrapper {
         if(serialPortManager!= null) {
             serialPortManager.closeSerialPort();
         }
-        device= new Device("/dev/ttyMT2");
+        device= new Device("/dev/ttyMT1");
         device.setSpeed(38400);
-        device.setParity('e');
+        device.setParity('n');
         serialPortManager = new SerialPortManager(device, false);   //不开启读线程，交给modbus
     }
 
