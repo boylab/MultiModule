@@ -1,4 +1,4 @@
-package com.boylab.multimodule.sdk;
+package com.boylab.multimodule.modbus;
 
 /**
  * D3模块通讯
