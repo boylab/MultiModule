@@ -15,7 +15,7 @@ import com.boylab.multimodule.util.ViewClick;
 public class D3View extends RelativeLayout implements View.OnClickListener {
 
     private TextView text_Weight;
-    private CheckBox box_Tare,box_Stable,box_Zero;
+    private CheckBox box_Stable, box_Tare, box_Zero;
     private Button btn_Add, btn_Remove, btn_Tare, btn_Zero;
 
     private OnViewCallBack onViewCallBack;
@@ -39,8 +39,9 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_d3_view, this);
 
         text_Weight = rootView.findViewById(R.id.text_Weight);
-        box_Tare = rootView.findViewById(R.id.box_Tare);
+
         box_Stable = rootView.findViewById(R.id.box_Stable);
+        box_Tare = rootView.findViewById(R.id.box_Tare);
         box_Zero = rootView.findViewById(R.id.box_Zero);
 
         btn_Add = rootView.findViewById(R.id.btn_Add);
@@ -52,6 +53,13 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
         btn_Remove.setOnClickListener(this);
         btn_Tare.setOnClickListener(this);
         btn_Zero.setOnClickListener(this);
+    }
+
+    public void setData(String weight, boolean isStable, boolean isTare, boolean isZero ){
+        text_Weight.setText(weight);
+        box_Stable.setChecked(isStable);
+        box_Tare.setChecked(isTare);
+        box_Zero.setChecked(isZero);
     }
 
     public void setOnViewCallBack(OnViewCallBack onViewCallBack) {
@@ -87,6 +95,5 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
         void onViewRemove();
         void onViewTare();
         void onViewZero();
-
     }
 }

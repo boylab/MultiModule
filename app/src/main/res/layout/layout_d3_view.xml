@@ -17,19 +17,19 @@
         android:text="000000.0"/>
 
     <CheckBox
-        android:id="@+id/box_Tare"
+        android:id="@+id/box_Stable"
         android:layout_below="@+id/text_Weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/box_Stable"
+        android:layout_toLeftOf="@+id/box_Tare"
         android:layout_marginRight="20dp"
         android:button="@null"
         android:gravity="center"
         android:drawableTop="@drawable/state_selector"
-        android:text="去皮"/>
+        android:text="稳定"/>
 
     <CheckBox
-        android:id="@+id/box_Stable"
+        android:id="@+id/box_Tare"
         android:layout_below="@+id/text_Weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:button="@null"
         android:gravity="center"
         android:drawableTop="@drawable/state_selector"
-        android:text="去皮"/>
+        android:text="置零"/>
 
     <Button
         android:id="@+id/btn_Add"

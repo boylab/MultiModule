@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 /**
  * modbus队列、管理命令收发
  */
-public class ModbusQueue extends AbsLoopThread {
+public class ModbusQueue extends AbsThread {
 
     private SerialMaster serialMaster;
     private LinkedBlockingDeque<ReqModbus> mQueue = new LinkedBlockingDeque<ReqModbus>();
@@ -55,7 +55,7 @@ public class ModbusQueue extends AbsLoopThread {
     }
 
     @Override
-    protected void runInLoopThread() throws Exception {
+    protected void runInLoopThread(){
         try {
             ReqModbus reqModbus = null;
             reqModbus = mQueue.take();

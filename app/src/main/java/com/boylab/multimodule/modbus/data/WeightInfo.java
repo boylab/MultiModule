@@ -12,33 +12,24 @@ public class WeightInfo implements TairaData {
      * 0x0006 1 状态标志 1 注 2
      * 0x0007 1 状态标志 2 注 3
     */
-    @ParamField(order = 0,length = 4)
+    @ParamField(order = 0,bytes = 4)
     private int gross;
-    @ParamField(order = 1,length = 4)
+    @ParamField(order = 1,bytes = 4)
     private int tare;
-    @ParamField(order = 2,length = 4)
+    @ParamField(order = 2,bytes = 4)
     private int net;
-    @ParamField(order = 3,length = 2)
+    @ParamField(order = 3,bytes = 2)
     private int sign1;
-    @ParamField(order = 4,length = 2)
+    @ParamField(order = 4,bytes = 2)
     private int sign2;
     private WeighSign1 weighSign1 = new WeighSign1();
     private WeighSign2 weighSign2 = new WeighSign2();
 
-    private static WeightInfo instance = null;
-
     public WeightInfo() {
     }
 
-    public static WeightInfo info(){
-        if (instance == null){
-            instance = new WeightInfo();
-        }
-        return instance;
-    }
-
     public void toInfo(byte[] data){
-        if (data.length >= 35 * 2){
+        if (data.length >= 8 * 2){
             WeightInfo mWeightInfo = Taira.DEFAULT.fromBytes(data, WeightInfo.class);
             if (mWeightInfo != null){
                 this.freshInfo(mWeightInfo);

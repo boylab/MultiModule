@@ -1,5 +1,6 @@
 package com.boylab.multimodule.modbus.socket;
 
+import com.boylab.multimodule.modbus.data.WeightInfo;
 import com.boylab.multimodule.modbus.master.SerialMaster;
 
 /**
@@ -91,6 +92,31 @@ public class CellManager {
      */
     public void removeAll(){
         cellHolding.removeAll();
+    }
+
+    /**
+     * 对指定模块进行监听
+     * @param slaveId
+     * @param onCellListener
+     */
+    public void setOnCellListener(int slaveId, OnCellListener onCellListener){
+        CellThread cellThread = cellHolding.getCellThread(slaveId);
+        if (cellThread != null && !cellThread.isShutdown()){
+            cellThread.setOnCellListener(onCellListener);
+        }
+    }
+
+    /**
+     * 获取置零模块的称重数据
+     * @param slaveId
+     */
+    public WeightInfo getWeightInfo(int slaveId){
+        WeightInfo weightInfo = null;
+        CellThread cellThread = cellHolding.getCellThread(slaveId);
+        if (cellThread != null && !cellThread.isShutdown()){
+            weightInfo = cellThread.getWeightInfo();
+        }
+        return weightInfo;
     }
 
     public void zero(int slaveId){

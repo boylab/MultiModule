@@ -6,20 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
+    <!--<Button
         android:id="@+id/btn_Start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:ems="8"
-        android:text="启动模块程序"/>
+        android:text="启动模块程序"/>-->
 
 
     <com.boylab.multimodule.view.D3View
         android:id="@+id/d3View01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_Start"
         android:layout_marginTop="20dp"/>
 
     <com.boylab.multimodule.view.D3View
