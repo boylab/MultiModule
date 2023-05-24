@@ -1,6 +1,7 @@
 package com.boylab.multimodule.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
     private Button btn_Add, btn_Remove, btn_Tare, btn_Zero;
 
     private OnViewCallBack onViewCallBack;
+
+    private boolean isStart = false;
 
     public D3View(Context context) {
         super(context);
@@ -73,10 +76,12 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
         }
         if (view.getId() == R.id.btn_Add){
             if (onViewCallBack != null){
+                setStart(true);
                 onViewCallBack.onViewAdd();
             }
         }else if (view.getId() == R.id.btn_Remove){
             if (onViewCallBack != null){
+                setStart(false);
                 onViewCallBack.onViewRemove();
             }
         }else if (view.getId() == R.id.btn_Tare){
@@ -88,6 +93,11 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
                 onViewCallBack.onViewZero();
             }
         }
+    }
+
+    public void setStart(boolean start) {
+        isStart = start;
+        btn_Add.setTextColor(isStart ? Color.RED : Color.BLACK);
     }
 
     public interface OnViewCallBack{

@@ -3,8 +3,10 @@ package com.boylab.multimodule;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.boylab.multimodule.modbus.data.WeighSign1;
 import com.boylab.multimodule.modbus.data.WeightInfo;
@@ -71,12 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onViewTare() {
-                cellManager.tare(slaveId_01);
+                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                //cellManager.tare(slaveId_01);
             }
 
             @Override
             public void onViewZero() {
-                cellManager.zero(slaveId_01);
+                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                //cellManager.zero(slaveId_01);
             }
         });
 
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         d3View02.setOnViewCallBack(new D3View.OnViewCallBack() {
             @Override
             public void onViewAdd() {
+
                 //第二个模块通讯地址为2
                 cellManager.createCell(slaveId_02);
                 cellManager.setOnCellListener(slaveId_02, new OnCellListener() {
@@ -119,12 +124,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onViewTare() {
-                cellManager.tare(slaveId_02);
+                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                //cellManager.tare(slaveId_02);
             }
 
             @Override
             public void onViewZero() {
-                cellManager.zero(slaveId_02);
+                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                //cellManager.zero(slaveId_02);
             }
         });
 

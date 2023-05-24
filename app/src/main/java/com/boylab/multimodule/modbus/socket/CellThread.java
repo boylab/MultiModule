@@ -1,11 +1,9 @@
 package com.boylab.multimodule.modbus.socket;
 
-import android.serialport.AbsLoopThread;
 import android.util.Log;
 
 import com.boylab.multimodule.modbus.bean.ReqModbus;
 import com.boylab.multimodule.modbus.data.WeightInfo;
-import com.serotonin.modbus4j.msg.ModbusResponse;
 import com.serotonin.modbus4j.msg.ReadCoilsResponse;
 import com.serotonin.modbus4j.msg.ReadHoldingRegistersResponse;
 import com.serotonin.modbus4j.msg.ReadInputRegistersResponse;
@@ -72,7 +70,7 @@ public class CellThread extends AbsThread implements OnModbusListener {
             cmd.setSlaveId(slaveId);
             modbusQueue.addQueue(cmd);
 
-            Thread.sleep(400); //按波特率38400下，接三十模块的余量 10ms * 30 = 300ms
+            Thread.sleep(160); //按波特率38400下，接三十模块的余量 10ms * 16 = 160ms
         }catch (Exception e){
             e.printStackTrace();
             Log.i(">>>>>", "runInLoopThread: CellThread Exception address = "+slaveId);

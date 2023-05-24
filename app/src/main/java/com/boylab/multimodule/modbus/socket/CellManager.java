@@ -5,13 +5,6 @@ import com.boylab.multimodule.modbus.master.SerialMaster;
 
 /**
  *
- *
- *
- *
- *
- *
- *
- *
  */
 public class CellManager {
 

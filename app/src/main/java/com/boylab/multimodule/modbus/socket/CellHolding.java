@@ -1,18 +1,12 @@
 package com.boylab.multimodule.modbus.socket;
 
-import android.serialport.AbsLoopThread;
-import android.serialport.Device;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.boylab.multimodule.modbus.bean.ReqModbus;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * 管理模块

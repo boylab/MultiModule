@@ -1,6 +1,6 @@
 package com.boylab.multimodule.modbus.master;
 
-import android.serialport.Device;
+import android.serialport.SerialBean;
 import android.serialport.SerialPortManager;
 
 import com.serotonin.modbus4j.serial.SerialPortWrapper;
@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 public class SerialWrapper implements SerialPortWrapper {
 
-    private Device device;
+    private SerialBean serialBean;
     private SerialPortManager serialPortManager;
 
     public SerialPortManager getSerialPortManager() {
@@ -20,7 +20,7 @@ public class SerialWrapper implements SerialPortWrapper {
     @Override
     public void close() {
         if (serialPortManager != null){
-            serialPortManager.closeSerialPort();
+            serialPortManager.close();
             serialPortManager = null;
         }
     }
@@ -31,12 +31,10 @@ public class SerialWrapper implements SerialPortWrapper {
     @Override
     public void open(){
         if(serialPortManager!= null) {
-            serialPortManager.closeSerialPort();
+            serialPortManager.close();
         }
-        device= new Device("/dev/ttyMT1");
-        device.setSpeed(38400);
-        device.setParity('n');
-        serialPortManager = new SerialPortManager(device, false);   //不开启读线程，交给modbus
+        serialBean = new SerialBean("/dev/ttyMT1", 38400, 0);
+        serialPortManager = new SerialPortManager(serialBean, false);   //不开启读线程，交给modbus
     }
 
     @Override
@@ -51,21 +49,21 @@ public class SerialWrapper implements SerialPortWrapper {
 
     @Override
     public int getBaudRate() {
-        return device.getSpeed();
+        return serialBean.getBaudrate();
     }
 
     @Override
     public int getDataBits() {
-        return device.getDataBits();
+        return serialBean.getDataBits();
     }
 
     @Override
     public int getStopBits() {
-        return device.getStopBits();
+        return serialBean.getStopBits();
     }
 
     @Override
     public int getParity() {
-        return device.getParityInt();
+        return serialBean.getParity();
     }
 }
