@@ -25,7 +25,7 @@
         android:id="@+id/d3View02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/d3View01"
+        android:layout_toRightOf="@+id/d3View01"
         android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

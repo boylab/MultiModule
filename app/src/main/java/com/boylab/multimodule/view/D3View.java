@@ -37,6 +37,13 @@ public class D3View extends RelativeLayout {
         tareWeight = rootView.findViewById(R.id.tareWeight);
         signView = rootView.findViewById(R.id.signView);
         actionView = rootView.findViewById(R.id.actionView);
+
+        netWeight.setLabel("净重");
+        //netWeight.setTextSize(30);
+        grossWeight.setLabel("毛重");
+        grossWeight.setTextSize(20);
+        tareWeight.setLabel("皮重");
+        tareWeight.setTextSize(20);
     }
 
     /**

@@ -33,12 +33,12 @@ public class WeighView extends RelativeLayout {
     }
 
     public void setTextSize(float size){
-        label_Weight.setTextSize(size);
+        label_Weight.setTextSize(size - 3);
         text_Weight.setTextSize(size);
     }
 
     public void setLabel(String label){
-        text_Weight.setText(label);
+        label_Weight.setText(label);
     }
 
     public void setText(String weigh){

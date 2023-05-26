@@ -3,6 +3,7 @@ package com.boylab.multimodule;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.boylab.multimodule.modbus.data.WeighSign1;
 import com.boylab.multimodule.modbus.data.WeightInfo;
@@ -45,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                Log.i(">>>boylab>>>", "run: "+weightInfo.toString());
                                 String net = weightInfo.netFormat();
                                 String gross = weightInfo.grossFormat();
                                 String tare = weightInfo.tareFormat();
-                                d3View01.setWeight(net, gross, net);
+                                d3View01.setWeight(net, gross, tare);
 
                                 WeighSign1 weighSign1 = weightInfo.weighSign1();
                                 boolean isStable = weighSign1.isStable();
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                                 String net = weightInfo.netFormat();
                                 String gross = weightInfo.grossFormat();
                                 String tare = weightInfo.tareFormat();
-                                d3View02.setWeight(net, gross, net);
+                                d3View02.setWeight(net, gross, tare);
 
                                 WeighSign1 weighSign1 = weightInfo.weighSign1();
                                 boolean isStable = weighSign1.isStable();

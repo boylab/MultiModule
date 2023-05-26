@@ -52,10 +52,7 @@ public class WeightInfo implements TairaData {
     }
 
     public String grossFormat() {
-        int point = weighSign1.getPoint();
-        double realGross = gross / Math.pow(10, point);
-        String formatWeigh = String.format("%6."+point+"f", realGross);
-        return formatWeigh;
+        return weighFormat(this.gross);
     }
 
     public void setGross(int gross) {
@@ -67,10 +64,7 @@ public class WeightInfo implements TairaData {
     }
 
     public String tareFormat() {
-        int point = weighSign1.getPoint();
-        double realTare = tare / Math.pow(10, point);
-        String formatWeigh = String.format("%6."+point+"f", realTare);
-        return formatWeigh;
+        return weighFormat(this.tare);
     }
 
     public void setTare(int tare) {
@@ -82,10 +76,13 @@ public class WeightInfo implements TairaData {
     }
 
     public String netFormat() {
-        //return net;
+        return weighFormat(this.net);
+    }
+
+    private String weighFormat(int weigh){
         int point = weighSign1.getPoint();
-        double realNet = net / Math.pow(10, point);
-        String formatWeigh = String.format("%6."+point+"f", realNet);
+        double realWeigh = weigh / Math.pow(10, point);
+        return String.format("%6."+point+"f", realWeigh);
         /*String grossValue = String.valueOf(gross);
         for (int i = 0; i < point; i++) {
             if (!grossValue.matches("^-?\\d+.\\d{"+point+"}$")){
@@ -94,8 +91,8 @@ public class WeightInfo implements TairaData {
                 break;
             }
         }*/
-        return formatWeigh;
     }
+
 
     public void setNet(int net) {
         this.net = net;
