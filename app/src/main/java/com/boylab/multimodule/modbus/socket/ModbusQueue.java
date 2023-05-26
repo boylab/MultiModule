@@ -11,7 +11,6 @@ import com.serotonin.modbus4j.msg.ReadInputRegistersResponse;
 import com.serotonin.modbus4j.msg.WriteCoilsResponse;
 import com.serotonin.modbus4j.msg.WriteRegistersResponse;
 
-import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
@@ -20,30 +19,18 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class ModbusQueue extends AbsThread {
 
     private SerialMaster serialMaster;
-    private LinkedBlockingDeque<ReqModbus> mQueue = new LinkedBlockingDeque<ReqModbus>();
+    private LinkedBlockingDeque<CellThread> mThreadQueue = new LinkedBlockingDeque<CellThread>();
+    private volatile CellThread cellThread = null;
+    private volatile ReqModbus reqModbus = null;
 
-    //private ModbusResponse mResponse;
-    private HashMap<Integer, OnModbusListener> mOnModbusListener = new HashMap<>();
 
     public ModbusQueue(SerialMaster serialMaster) {
         super();
         this.serialMaster = serialMaster;
-        this.mQueue = mQueue;
     }
 
-    public void addQueue(ReqModbus reqModbus) {
-        this.mQueue.offer(reqModbus);
-        Log.i(">>>boylab>>>", "addQueue: "+this.mQueue.size());
-    }
-
-    public void setOnModbusListener(int slaveId,OnModbusListener onModbusListener) {
-        mOnModbusListener.put(slaveId, onModbusListener);
-    }
-
-    public void removeOnModbusListener(int slaveId) {
-        if (mOnModbusListener.containsKey(slaveId)){
-            mOnModbusListener.remove(slaveId);
-        }
+    public void addQueue(CellThread cellThread) {
+        this.mThreadQueue.offer(cellThread);
     }
 
     @Override
@@ -53,41 +40,51 @@ public class ModbusQueue extends AbsThread {
 
     @Override
     protected void runInLoopThread(){
-        long time = 0;
         try {
-            ReqModbus reqModbus = null;
-            reqModbus = mQueue.take();
-            time = System.currentTimeMillis();
-            int funcCode = reqModbus.getFuncCode();
-            int slaveId = reqModbus.getSlaveId();
-            OnModbusListener onModbusListener = mOnModbusListener.get(slaveId);
+            cellThread = mThreadQueue.take();
+            if (!cellThread.isShutdown()){
+                /**
+                 * 重新
+                 */
+                mThreadQueue.offer(cellThread);
+                reqModbus = cellThread.takeCmd();
 
-             if (funcCode == FunctionCode.READ_INPUT_REGISTERS){
-                ReadInputRegistersResponse mResponse = serialMaster.readInputRegisters(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getLen());
-                if (mResponse !=null && onModbusListener != null){
-                    onModbusListener.onReadInputRegisters(slaveId, reqModbus.what(), mResponse);
-                }
+                int slaveId = cellThread.getSlaveId();
+                int funcCode = reqModbus.getFuncCode();
+                /*Log.i(">>>boylab>>>", "runInLoopThread: slaveId = "+slaveId);
+                Log.i(">>>boylab>>>", "runInLoopThread: reqModbus.getSlaveId() = "+reqModbus.getSlaveId());*/
+                if (funcCode == FunctionCode.READ_INPUT_REGISTERS){
+                    ReadInputRegistersResponse mResponse = serialMaster.readInputRegisters(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getLen());
+                    if (mResponse !=null){
+                        cellThread.onReadInputRegisters(slaveId, reqModbus.what(), mResponse);
+                    }
                  /*long delay = System.currentTimeMillis() - time;
                  Log.i("___boylab>>>___", "运行时长: delay = "+delay);*/
-            }else if (funcCode == FunctionCode.READ_HOLDING_REGISTERS){
-                 ReadHoldingRegistersResponse mResponse = serialMaster.readHoldingRegisters(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getLen());
-                 if (mResponse !=null && onModbusListener != null){
-                     onModbusListener.onReadHoldingRegisters(slaveId, reqModbus.what(), mResponse);
-                 }
-             }else if (funcCode == FunctionCode.WRITE_REGISTERS){
-                 WriteRegistersResponse mResponse = serialMaster.writeHoldingRegisters(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getWriteValue());
-                 if (mResponse !=null && onModbusListener != null){
-                     onModbusListener.onWriteHoldingRegisters(slaveId, reqModbus.what(), mResponse);
-                 }
-             }else if (funcCode == FunctionCode.READ_COILS){
-                ReadCoilsResponse mResponse = serialMaster.readCoils(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getLen());
-                if (mResponse !=null && onModbusListener != null){
-                    onModbusListener.onReadCoils(slaveId, reqModbus.what(), mResponse);
-                }
-            }else if (funcCode == FunctionCode.WRITE_COILS){
-                WriteCoilsResponse mResponse = serialMaster.writeCoils(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getWriteBools());
-                if (mResponse !=null && onModbusListener != null){
-                    onModbusListener.onWriteCoils(slaveId, reqModbus.what(), mResponse);
+                }else if (funcCode == FunctionCode.READ_HOLDING_REGISTERS){
+                    ReadHoldingRegistersResponse mResponse = serialMaster.readHoldingRegisters(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getLen());
+                    if (mResponse !=null){
+                        cellThread.onReadHoldingRegisters(slaveId, reqModbus.what(), mResponse);
+                    }
+                }else if (funcCode == FunctionCode.WRITE_REGISTERS){
+                    WriteRegistersResponse mResponse = serialMaster.writeHoldingRegisters(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getWriteValue());
+                    if (mResponse !=null){
+                        cellThread.onWriteHoldingRegisters(slaveId, reqModbus.what(), mResponse);
+                    }
+                }else if (funcCode == FunctionCode.READ_COILS){
+                    ReadCoilsResponse mResponse = serialMaster.readCoils(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getLen());
+                    if (mResponse !=null){
+                        cellThread.onReadCoils(slaveId, reqModbus.what(), mResponse);
+                    }
+                }else if (funcCode == FunctionCode.WRITE_COIL){
+                    WriteCoilsResponse mResponse = serialMaster.writeCoils(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getWriteBools());
+                    if (mResponse !=null){
+                        cellThread.onWriteCoils(slaveId, reqModbus.what(), mResponse);
+                    }
+                }else if (funcCode == FunctionCode.WRITE_COILS){
+                    WriteCoilsResponse mResponse = serialMaster.writeCoils(reqModbus.getSlaveId(), reqModbus.getStart(), reqModbus.getWriteBools());
+                    if (mResponse !=null){
+                        cellThread.onWriteCoils(slaveId, reqModbus.what(), mResponse);
+                    }
                 }
             }
         }catch (InterruptedException e) {
@@ -104,4 +101,6 @@ public class ModbusQueue extends AbsThread {
     protected void loopFinish(Exception e) {
 
     }
+
+
 }

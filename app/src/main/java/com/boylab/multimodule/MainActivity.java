@@ -3,10 +3,6 @@ package com.boylab.multimodule;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.boylab.multimodule.modbus.data.WeighSign1;
 import com.boylab.multimodule.modbus.data.WeightInfo;
@@ -37,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
          * 2、第一个模块
          */
         int slaveId_01 = 1;
-        d3View01.setOnViewCallBack(new D3View.OnViewCallBack() {
+        d3View01.setOnViewCallBack(new D3View.OnActionListener() {
 
             @Override
             public void onViewAdd() {
@@ -49,12 +45,16 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                String weight = weightInfo.netFormat();
+                                String net = weightInfo.netFormat();
+                                String gross = weightInfo.grossFormat();
+                                String tare = weightInfo.tareFormat();
+                                d3View01.setWeight(net, gross, net);
+
                                 WeighSign1 weighSign1 = weightInfo.weighSign1();
-                                boolean stable = weighSign1.isStable();
-                                boolean tare = weighSign1.isTare();
-                                boolean zero = weighSign1.isZero();
-                                d3View01.setData(weight, stable, tare, zero);
+                                boolean isStable = weighSign1.isStable();
+                                boolean isTare = weighSign1.isTare();
+                                boolean isZero = weighSign1.isZero();
+                                d3View01.setSign(isStable, isTare, isZero);
                             }
                         });
                     }
@@ -73,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onViewTare() {
-                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
-                //cellManager.tare(slaveId_01);
+                //Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                cellManager.tare(slaveId_01);
             }
 
             @Override
             public void onViewZero() {
-                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
-                //cellManager.zero(slaveId_01);
+//                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                cellManager.zero(slaveId_01);
             }
         });
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
          * 第二个模块
          */
         int slaveId_02 = 2;
-        d3View02.setOnViewCallBack(new D3View.OnViewCallBack() {
+        d3View02.setOnViewCallBack(new D3View.OnActionListener() {
             @Override
             public void onViewAdd() {
 
@@ -100,12 +100,16 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                String weight = weightInfo.netFormat();
+                                String net = weightInfo.netFormat();
+                                String gross = weightInfo.grossFormat();
+                                String tare = weightInfo.tareFormat();
+                                d3View02.setWeight(net, gross, net);
+
                                 WeighSign1 weighSign1 = weightInfo.weighSign1();
-                                boolean stable = weighSign1.isStable();
-                                boolean tare = weighSign1.isTare();
-                                boolean zero = weighSign1.isZero();
-                                d3View02.setData(weight, stable, tare, zero);
+                                boolean isStable = weighSign1.isStable();
+                                boolean isTare = weighSign1.isTare();
+                                boolean isZero = weighSign1.isZero();
+                                d3View02.setSign(isStable, isTare, isZero);
                             }
                         });
                     }
@@ -124,14 +128,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onViewTare() {
-                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
-                //cellManager.tare(slaveId_02);
+                //Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                cellManager.tare(slaveId_02);
             }
 
             @Override
             public void onViewZero() {
-                Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
-                //cellManager.zero(slaveId_02);
+                //Toast.makeText(MainActivity.this, "待完成", Toast.LENGTH_SHORT).show();
+                cellManager.zero(slaveId_02);
             }
         });
 

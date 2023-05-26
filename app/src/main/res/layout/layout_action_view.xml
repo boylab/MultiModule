@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:background="@drawable/shape_d3view_bg">
+
+    <Button
+        android:id="@+id/btn_Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/netWeight"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:text="启动" />
+
+    <Button
+        android:id="@+id/btn_Remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_Add"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:text="移除" />
+
+    <Button
+        android:id="@+id/btn_Tare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_Remove"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:text="去皮" />
+
+    <Button
+        android:id="@+id/btn_Zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_Tare"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:text="置零" />
+
+</RelativeLayout>

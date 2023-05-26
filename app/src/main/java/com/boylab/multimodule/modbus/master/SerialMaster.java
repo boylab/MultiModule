@@ -67,7 +67,7 @@ public class SerialMaster {
             }
             ModbusFactory modbusFactory = new ModbusFactory();
             rtuMaster = modbusFactory.createRtuMaster(serialWrapper);
-            rtuMaster.setTimeout(10000);
+            rtuMaster.setTimeout(500);
             rtuMaster.setRetries(0);
             rtuMaster.init();
             isWrapperOpen.set(true);

@@ -10,12 +10,14 @@ import com.serotonin.modbus4j.msg.WriteRegistersResponse;
 
 interface OnModbusListener {
 
-    void onReadCoils(int slaveId, int what, ReadCoilsResponse coilsResponse);
-    void onReadHoldingRegisters(int slaveId, int what, ReadHoldingRegistersResponse holdingResponse);
     void onReadInputRegisters(int slaveId, int what, ReadInputRegistersResponse inputResponse);
+
+    void onReadCoils(int slaveId, int what, ReadCoilsResponse coilsResponse);
     void onWriteCoil(int slaveId, int what, WriteCoilResponse writeCoilResponse);
-    void onWriteHoldingRegister(int slaveId, int what, WriteRegisterResponse writeRegisterResponse);
     void onWriteCoils(int slaveId, int what, WriteCoilsResponse writeCoilsResponse);
+
+    void onReadHoldingRegisters(int slaveId, int what, ReadHoldingRegistersResponse holdingResponse);
+    void onWriteHoldingRegister(int slaveId, int what, WriteRegisterResponse writeRegisterResponse);
     void onWriteHoldingRegisters(int slaveId, int what, WriteRegistersResponse writeRegistersResponse);
 
 }

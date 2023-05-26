@@ -13,10 +13,12 @@ public class Command {
     public static final int readCalib  = 0x05;
     public static final int writeCalib = 0x06;*/
 
-    public static final int ZERO       = 0x07;
-    public static final int TARE       = 0x08;
-    public static final int LockWeigh  = 0x09;
-    public static final int SUM        = 0x0A;
+    public static final int ZERO    = 0x08;
+    public static final int TARE    = 0x09;
+    public static final int Lock    = 0x0A;
+    public static final int UnLock  = 0x0B;
+    public static final int Sum     = 0x0C;
+    public static final int UnSum   = 0x0D;
     /*public static final int calibZero  = 0x0B;
     public static final int calibWeigh = 0x0C;
     public static final int switchRate = 0x0D;
@@ -30,14 +32,16 @@ public class Command {
         put(readCalib,  new ReqModbus(readCalib,0x03, 0x0041, 9));
         put(writeCalib, new ReqModbus(writeCalib,0x10, 0x0041, new short[9]));*/
 
-        put(ZERO,       new ReqModbus(ZERO, 0x10, 0x4743, new short[]{0x4743, 0x0101, (short) 0xFEFE, 0x0002, 0x0000, 0x0000}));
-        put(TARE,       new ReqModbus(TARE, 0x10, 0x4743, new short[]{0x4743, 0x0202, (short) 0xFEFE, 0x0001, 0x0000}));
-        put(LockWeigh,  new ReqModbus(LockWeigh, 0x10, 0x4743, new short[]{0x4743, 0x0303, (short) 0xFEFE, 0x0001, 0x0000}));
-        put(SUM,        new ReqModbus(SUM, 0x10, 0x4743, new short[]{0x4743, 0x0404, (short) 0xFEFE, 0x0002, 0x0000, 0x0000}));
+        put(ZERO,   new ReqModbus(ZERO, 0x05, 0x0008, new boolean[]{true}));
+        put(TARE,   new ReqModbus(TARE, 0x05, 0x0009, new boolean[]{true}));
+        put(Lock,   new ReqModbus(Lock, 0x05, 0x000A, new boolean[]{true}));
+        put(UnLock, new ReqModbus(UnLock,0x05, 0x000B, new boolean[]{true}));
+        put(Sum,    new ReqModbus(Sum,  0x05, 0x000C, new boolean[]{true}));
+        put(UnSum,  new ReqModbus(UnSum, 0x05, 0x000D, new boolean[]{true}));
         /*put(calibZero,  new ReqModbus(calibZero, 0x10, 0x4743, new short[]{0x4743, 0x3030, (short) 0xCFCF, 0x0001, 0x0000}));
         put(calibWeigh, new ReqModbus(calibWeigh, 0x10, 0x4743, new short[]{0x4743, 0x3131, (short) 0xCECE, 0x0003, 0x0000, 0x0000}));
         put(switchRate, new ReqModbus(switchRate, 0x10, 0x4743, new short[]{0x4743, 0x4040, (short) 0xBFBF, 0x0002, 0x0000, 0x0000}));
-        put(clearRate,  new ReqModbus(clearRate, 0x10, 0x4743, new short[]{0x4743, 0x4141, (short) 0xBEBE, 0x0000}));*/
+        put(clearRate,  new ReqModbus(clearRate, 0x10, 0x4743, new short[]{0x4743, 0x4141, (short) 0xBEBE,   }));*/
     }};
 
     public static ReqModbus getCmd(int funcCode){

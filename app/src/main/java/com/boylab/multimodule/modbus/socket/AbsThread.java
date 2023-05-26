@@ -73,7 +73,6 @@ public abstract class AbsThread implements Runnable {
             this.thread.interrupt();
             this.thread = null;
         }
-
     }
 
     public synchronized void shutdown(Exception e) {
@@ -82,7 +81,7 @@ public abstract class AbsThread implements Runnable {
     }
 
     public boolean isShutdown() {
-        return this.isShutdown;
+        return this.isShutdown || this.isStop;
     }
 }
 

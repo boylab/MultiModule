@@ -3,6 +3,8 @@ package com.boylab.multimodule.modbus.socket;
 
 import android.util.Log;
 
+import com.boylab.multimodule.modbus.master.SerialMaster;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,58 +13,59 @@ import java.util.Set;
 /**
  * 管理模块
  */
-class CellHolding {
+class CellHolding extends ModbusQueue{
 
-    private HashMap<Integer, CellThread> mSlaveThread = new HashMap<>();
+    private HashMap<Integer, CellThread> mThreadHold = new HashMap<>();
+
+    public CellHolding(SerialMaster serialMaster) {
+        super(serialMaster);
+    }
 
     public CellThread getCellThread(int slaveId) {
         CellThread cellThread = null;
-        if (mSlaveThread.containsKey(slaveId)) {
-            cellThread = mSlaveThread.get(slaveId);
+        if (mThreadHold.containsKey(slaveId)) {
+            cellThread = mThreadHold.get(slaveId);
         }
         return cellThread;
     }
-
-    /*public List<Integer> d3List(){
-        Set<Integer> keySet = mSlaveThread.keySet();
-        List<Integer> slaveList = new ArrayList<>(keySet);
-        return slaveList;
-    }*/
-
-    public void createCell(int slaveId, ModbusQueue modbusQueue){
-        if (mSlaveThread.containsKey(slaveId)){
-            Log.e(">>>>>", "createCell: 不能重复添加称重模块！");
-        }else {
-            CellThread cellThread = new CellThread(slaveId, modbusQueue);
+    
+    public void createCell(int slaveId){
+        if (!mThreadHold.containsKey(slaveId)){
+            CellThread cellThread = new CellThread(slaveId);
             cellThread.start();
-            mSlaveThread.put(slaveId, cellThread);
+            mThreadHold.put(slaveId, cellThread);
+
+            /**
+             * 添加到ModbusQueue，Modbus命令收发队列
+             */
+            addQueue(cellThread);
         }
     }
 
     public void removeCell(int slaveId){
-        if (mSlaveThread.containsKey(slaveId)){
-            CellThread cellThread = mSlaveThread.get(slaveId);
+        if (mThreadHold.containsKey(slaveId)){
+            CellThread cellThread = mThreadHold.get(slaveId);
             if (!cellThread.isShutdown()){
                 cellThread.shutdown();
             }
-            mSlaveThread.remove(slaveId);
+            mThreadHold.remove(slaveId);
         }else {
             Log.e(">>>>>", "createCell: 不存在此称重模块！");
         }
     }
 
     public void removeAll(){
-        if (!mSlaveThread.isEmpty()){
-            Set<Integer> keySet = mSlaveThread.keySet();
+        if (!mThreadHold.isEmpty()){
+            Set<Integer> keySet = mThreadHold.keySet();
             List<Integer> keyList = new ArrayList<>(keySet);
             for (int i = 0; i < keyList.size(); i++) {
                 int slaveId = keyList.get(i);
-                CellThread cellThread = mSlaveThread.get(slaveId);
+                CellThread cellThread = mThreadHold.get(slaveId);
 
                 if (!cellThread.isShutdown()){
                     cellThread.shutdown();
                 }
-                mSlaveThread.remove(slaveId);
+                mThreadHold.remove(slaveId);
             }
         }
     }

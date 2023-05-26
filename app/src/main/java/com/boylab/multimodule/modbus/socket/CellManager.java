@@ -9,9 +9,7 @@ import com.boylab.multimodule.modbus.master.SerialMaster;
 public class CellManager {
 
     private volatile SerialMaster serialMaster = null;      //平板串口管理
-    private ModbusQueue modbusQueue = null;
-
-    private volatile CellHolding cellHolding = new CellHolding();      //串口通讯线程
+    private volatile CellHolding cellHolding = null;      //串口通讯线程
 
     private static CellManager instance = null;
     private CellManager(){
@@ -32,7 +30,7 @@ public class CellManager {
      * 开启模块通讯
      */
     public void startEngine(){
-        if (serialMaster == null && modbusQueue == null){
+        if (serialMaster == null && cellHolding == null){
             /**
              * 启动串口
              */
@@ -42,8 +40,8 @@ public class CellManager {
             /**
              * 启动底层modbus队列
              */
-            modbusQueue = new ModbusQueue(serialMaster);
-            modbusQueue.start();
+            cellHolding = new CellHolding(serialMaster);
+            cellHolding.start();
         }
     }
 
@@ -55,9 +53,9 @@ public class CellManager {
             cellHolding.removeAll();
         }
 
-        if (modbusQueue != null && !modbusQueue.isShutdown()){
-            modbusQueue.shutdown();
-            modbusQueue = null;
+        if (cellHolding != null && !cellHolding.isShutdown()){
+            cellHolding.shutdown();
+            cellHolding = null;
         }
 
         serialMaster = SerialMaster.newInstance();
@@ -69,7 +67,7 @@ public class CellManager {
      * @param slaveId
      */
     public void createCell(int slaveId){
-        cellHolding.createCell(slaveId, modbusQueue);
+        cellHolding.createCell(slaveId);
     }
 
     /**

@@ -1,27 +1,18 @@
 package com.boylab.multimodule.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.boylab.multimodule.R;
-import com.boylab.multimodule.util.ViewClick;
 
-public class D3View extends RelativeLayout implements View.OnClickListener {
+public class D3View extends RelativeLayout {
 
-    private TextView text_Weight;
-    private CheckBox box_Stable, box_Tare, box_Zero;
-    private Button btn_Add, btn_Remove, btn_Tare, btn_Zero;
-
-    private OnViewCallBack onViewCallBack;
-
-    private boolean isStart = false;
+    private WeighView netWeight, grossWeight, tareWeight;
+    private SignView signView;
+    private ActionView actionView;
 
     public D3View(Context context) {
         super(context);
@@ -41,66 +32,44 @@ public class D3View extends RelativeLayout implements View.OnClickListener {
     private void initView(Context context) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_d3_view, this);
 
-        text_Weight = rootView.findViewById(R.id.text_Weight);
-
-        box_Stable = rootView.findViewById(R.id.box_Stable);
-        box_Tare = rootView.findViewById(R.id.box_Tare);
-        box_Zero = rootView.findViewById(R.id.box_Zero);
-
-        btn_Add = rootView.findViewById(R.id.btn_Add);
-        btn_Remove = rootView.findViewById(R.id.btn_Remove);
-        btn_Tare = rootView.findViewById(R.id.btn_Tare);
-        btn_Zero = rootView.findViewById(R.id.btn_Zero);
-
-        btn_Add.setOnClickListener(this);
-        btn_Remove.setOnClickListener(this);
-        btn_Tare.setOnClickListener(this);
-        btn_Zero.setOnClickListener(this);
+        netWeight = rootView.findViewById(R.id.netWeight);
+        grossWeight = rootView.findViewById(R.id.grossWeight);
+        tareWeight = rootView.findViewById(R.id.tareWeight);
+        signView = rootView.findViewById(R.id.signView);
+        actionView = rootView.findViewById(R.id.actionView);
     }
 
-    public void setData(String weight, boolean isStable, boolean isTare, boolean isZero ){
-        text_Weight.setText(weight);
-        box_Stable.setChecked(isStable);
-        box_Tare.setChecked(isTare);
-        box_Zero.setChecked(isZero);
+    /**
+     * 刷新重量数据
+     * @param net
+     * @param gross
+     * @param tare
+     */
+    public void setWeight(String net, String gross, String tare){
+        netWeight.setText(net);
+        grossWeight.setText(gross);
+        tareWeight.setText(tare);
     }
 
-    public void setOnViewCallBack(OnViewCallBack onViewCallBack) {
-        this.onViewCallBack = onViewCallBack;
+    /**
+     * 刷新状态
+     * @param isStable
+     * @param isTare
+     * @param isZero
+     */
+    public void setSign(boolean isStable, boolean isTare, boolean isZero ){
+        signView.setSign(isStable, isTare, isZero);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (ViewClick.isFastClick()){
-            return;
-        }
-        if (view.getId() == R.id.btn_Add){
-            if (onViewCallBack != null){
-                setStart(true);
-                onViewCallBack.onViewAdd();
-            }
-        }else if (view.getId() == R.id.btn_Remove){
-            if (onViewCallBack != null){
-                setStart(false);
-                onViewCallBack.onViewRemove();
-            }
-        }else if (view.getId() == R.id.btn_Tare){
-            if (onViewCallBack != null){
-                onViewCallBack.onViewTare();
-            }
-        }else if (view.getId() == R.id.btn_Zero){
-            if (onViewCallBack != null){
-                onViewCallBack.onViewZero();
-            }
-        }
+    /**
+     *
+     * @param onViewCallBack
+     */
+    public void setOnViewCallBack(OnActionListener onViewCallBack) {
+        actionView.setOnViewCallBack(onViewCallBack);
     }
 
-    public void setStart(boolean start) {
-        isStart = start;
-        btn_Add.setTextColor(isStart ? Color.RED : Color.BLACK);
-    }
-
-    public interface OnViewCallBack{
+    public interface OnActionListener{
         void onViewAdd();
         void onViewRemove();
         void onViewTare();

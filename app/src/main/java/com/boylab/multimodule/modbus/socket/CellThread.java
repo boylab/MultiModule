@@ -1,7 +1,5 @@
 package com.boylab.multimodule.modbus.socket;
 
-import android.util.Log;
-
 import com.boylab.multimodule.modbus.bean.ReqModbus;
 import com.boylab.multimodule.modbus.data.WeightInfo;
 import com.serotonin.modbus4j.msg.ReadCoilsResponse;
@@ -12,6 +10,10 @@ import com.serotonin.modbus4j.msg.WriteCoilsResponse;
 import com.serotonin.modbus4j.msg.WriteRegisterResponse;
 import com.serotonin.modbus4j.msg.WriteRegistersResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
+
 /**
  * 每个模块通讯的线程
  * 持有ModbusQueue线程对象
@@ -19,15 +21,22 @@ import com.serotonin.modbus4j.msg.WriteRegistersResponse;
 public class CellThread extends AbsThread implements OnModbusListener {
 
     private int slaveId = 1;    //通讯地址
-    private ModbusQueue modbusQueue = null;
+    //private LinkedBlockingDeque<ReqModbus> mQueue = new LinkedBlockingDeque<ReqModbus>();
+
+    private List<ReqModbus> mReqCmd = new ArrayList<>();
+    private long timeMills = 0;
+    private final long CMD_DELAY = 50;
 
     private WeightInfo weightInfo = new WeightInfo();
     private OnCellListener onCellListener = null;
 
-    public CellThread(int slaveId, ModbusQueue modbusQueue) {
+    public CellThread(int slaveId) {
         super();
         this.slaveId = slaveId;
-        this.modbusQueue = modbusQueue;
+    }
+
+    public int getSlaveId() {
+        return slaveId;
     }
 
     public WeightInfo getWeightInfo() {
@@ -38,42 +47,22 @@ public class CellThread extends AbsThread implements OnModbusListener {
         this.onCellListener = onCellListener;
     }
 
-    /**
-     * 去皮
-     */
-    public void zeroAction(){
-        ReqModbus cmd = Command.getCmd(Command.ZERO);
-        cmd.setSlaveId(slaveId);
-        modbusQueue.addQueue(cmd);
-    }
-
-    /**
-     * 置零
-     */
-    public void tareAction(){
-        ReqModbus cmd = Command.getCmd(Command.TARE);
-        cmd.setSlaveId(slaveId);
-        modbusQueue.addQueue(cmd);
-    }
-
     @Override
     protected void beforeLoop() throws Exception {
         super.beforeLoop();
-        //设置modbus回调监听
-        modbusQueue.setOnModbusListener(slaveId, this);
     }
 
     @Override
     protected void runInLoopThread() {
         try {
-            ReqModbus cmd = Command.getCmd(Command.readInfo);
-            cmd.setSlaveId(slaveId);
-            modbusQueue.addQueue(cmd);
-
-            Thread.sleep(160); //按波特率38400下，接三十模块的余量 10ms * 16 = 160ms
+            /*if (mReqCmd.isEmpty()){
+                ReqModbus cmd = Command.getCmd(Command.readInfo);
+                cmd.setSlaveId(slaveId);
+                mReqCmd.add(cmd);
+            }*/
+            //Thread.sleep(500);   //添加最低硬延时，防止刷新过快
         }catch (Exception e){
             e.printStackTrace();
-            Log.i(">>>>>", "runInLoopThread: CellThread Exception address = "+slaveId);
         }
     }
 
@@ -86,10 +75,7 @@ public class CellThread extends AbsThread implements OnModbusListener {
     public synchronized void shutdown() {
         super.shutdown();
         onCellListener = null;
-        //清楚modbus回调监听
-        modbusQueue.removeOnModbusListener(slaveId);
     }
-
 
     @Override
     public void onReadCoils(int slaveId, int what, ReadCoilsResponse coilsResponse) {
@@ -144,4 +130,54 @@ public class CellThread extends AbsThread implements OnModbusListener {
             onCellListener.onCellAction(this.slaveId, what, writeRegistersResponse);
         }
     }
+
+    /**
+     * 去皮指令
+     */
+    public void zeroAction(){
+        ReqModbus cmd = Command.getCmd(Command.ZERO);
+        cmd.setSlaveId(this.slaveId);
+        mReqCmd.add(cmd);
+    }
+
+    /**
+     * 置零指令
+     */
+    public void tareAction(){
+        ReqModbus cmd = Command.getCmd(Command.TARE);
+        cmd.setSlaveId(this.slaveId);
+        mReqCmd.add(cmd);
+    }
+
+    /**
+     * 从队列中取指令
+     * @return
+     */
+    public ReqModbus takeCmd(){
+        needDelay();
+        if (!mReqCmd.isEmpty()){
+            ReqModbus reqModbus = mReqCmd.get(0);
+            mReqCmd.remove(0);  //移除
+            return reqModbus;
+        }else {
+            ReqModbus cmd = Command.getCmd(Command.readInfo);
+            cmd.setSlaveId(this.slaveId);
+            return cmd;
+        }
+    }
+
+    private void needDelay(){
+        if (timeMills != 0){
+            long delay = CMD_DELAY - (System.currentTimeMillis() - timeMills);
+            if (delay > 10){
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        timeMills = System.currentTimeMillis();
+    }
+
 }
