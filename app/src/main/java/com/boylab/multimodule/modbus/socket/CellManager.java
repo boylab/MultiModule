@@ -1,5 +1,6 @@
 package com.boylab.multimodule.modbus.socket;
 
+import com.boylab.multimodule.modbus.bean.ReqModbus;
 import com.boylab.multimodule.modbus.data.WeightInfo;
 import com.boylab.multimodule.modbus.master.SerialMaster;
 
@@ -110,17 +111,34 @@ public class CellManager {
         return weightInfo;
     }
 
+    /**
+     * 置零指令
+     */
     public void zero(int slaveId){
         CellThread cellThread = cellHolding.getCellThread(slaveId);
         if (cellThread != null && !cellThread.isShutdown()){
-            cellThread.zeroAction();
+            ReqModbus cmd = Command.getCmd(Command.ZERO);
+            cmd.setSlaveId(slaveId);
+            cellThread.sendCmd(cmd);
         }
     }
 
+    /**
+     * 去皮指令
+     */
     public void tare(int slaveId){
         CellThread cellThread = cellHolding.getCellThread(slaveId);
         if (cellThread != null && !cellThread.isShutdown()){
-            cellThread.tareAction();
+            ReqModbus cmd = Command.getCmd(Command.TARE);
+            cmd.setSlaveId(slaveId);
+            cellThread.sendCmd(cmd);
+        }
+    }
+
+    public void sendCmd(int slaveId, ReqModbus cmd){
+        CellThread cellThread = cellHolding.getCellThread(slaveId);
+        if (cellThread != null && !cellThread.isShutdown()){
+            cellThread.sendCmd(cmd);
         }
     }
 

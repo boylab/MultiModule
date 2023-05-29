@@ -131,21 +131,7 @@ public class CellThread extends AbsThread implements OnModbusListener {
         }
     }
 
-    /**
-     * 去皮指令
-     */
-    public void zeroAction(){
-        ReqModbus cmd = Command.getCmd(Command.ZERO);
-        cmd.setSlaveId(this.slaveId);
-        mReqCmd.add(cmd);
-    }
-
-    /**
-     * 置零指令
-     */
-    public void tareAction(){
-        ReqModbus cmd = Command.getCmd(Command.TARE);
-        cmd.setSlaveId(this.slaveId);
+    public void sendCmd(ReqModbus cmd){
         mReqCmd.add(cmd);
     }
 

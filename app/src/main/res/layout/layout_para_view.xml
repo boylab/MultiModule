@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="30dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/shape_d3view_bg"
+    android:padding="1dp">
+
+    <TextView
+        android:id="@+id/text_Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="8"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="启动"
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn_Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/text_Label"
+        android:layout_alignBottom="@+id/text_Label"
+        android:layout_toRightOf="@+id/text_Label"
+        android:background="@android:color/white"
+        android:ems="5"
+        android:gravity="center_vertical|left"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="08dp"
+        android:text="启动"
+        android:textSize="22sp" />
+
+    <com.boylab.smartspinner.SmartSpinner
+        android:id="@+id/spinner_Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/text_Label"
+        android:layout_alignBottom="@+id/text_Label"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/text_Label"
+        android:textSize="22sp"
+        app:itemHeight="50dp"
+        app:itemWidth="160dp"
+        app:numColumns="2" />
+
+</RelativeLayout>

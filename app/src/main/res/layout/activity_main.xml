@@ -4,28 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <!--<Button
-        android:id="@+id/btn_Start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:ems="8"
-        android:text="启动模块程序"/>-->
-
+    android:padding="10dp"
+    tools:context=".activity.MainActivity">
 
     <com.boylab.multimodule.view.D3View
         android:id="@+id/d3View01"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_height="wrap_content"/>
 
     <com.boylab.multimodule.view.D3View
         android:id="@+id/d3View02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/d3View01"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

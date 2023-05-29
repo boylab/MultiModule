@@ -77,9 +77,11 @@ public class D3View extends RelativeLayout {
     }
 
     public interface OnActionListener{
-        void onViewAdd();
-        void onViewRemove();
-        void onViewTare();
-        void onViewZero();
+        void onD3Start();
+        void onD3Stop();
+        void onD3Tare();
+        void onD3Zero();
+        void onD3Calib();
+        void onD3SysSet();
     }
 }

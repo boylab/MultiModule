@@ -13,7 +13,7 @@ import com.boylab.multimodule.util.ViewClick;
 
 public class ActionView extends RelativeLayout implements View.OnClickListener {
 
-    private Button btn_Add, btn_Remove, btn_Tare, btn_Zero;
+    private Button btn_Start, btn_Stop, btn_Tare, btn_Zero, btn_CalibPara, btn_SysSet;
     private D3View.OnActionListener onViewCallBack;
     private boolean isStart = false;
 
@@ -32,15 +32,19 @@ public class ActionView extends RelativeLayout implements View.OnClickListener {
     private void initView(Context context) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_action_view, this);
 
-        btn_Add = rootView.findViewById(R.id.btn_Add);
-        btn_Remove = rootView.findViewById(R.id.btn_Remove);
+        btn_Start = rootView.findViewById(R.id.btn_Start);
+        btn_Stop = rootView.findViewById(R.id.btn_Stop);
         btn_Tare = rootView.findViewById(R.id.btn_Tare);
         btn_Zero = rootView.findViewById(R.id.btn_Zero);
+        btn_CalibPara = rootView.findViewById(R.id.btn_CalibPara);
+        btn_SysSet = rootView.findViewById(R.id.btn_SysSet);
 
-        btn_Add.setOnClickListener(this);
-        btn_Remove.setOnClickListener(this);
+        btn_Start.setOnClickListener(this);
+        btn_Stop.setOnClickListener(this);
         btn_Tare.setOnClickListener(this);
         btn_Zero.setOnClickListener(this);
+        btn_CalibPara.setOnClickListener(this);
+        btn_SysSet.setOnClickListener(this);
     }
 
     @Override
@@ -48,30 +52,38 @@ public class ActionView extends RelativeLayout implements View.OnClickListener {
         if (ViewClick.isFastClick()){
             return;
         }
-        if (view.getId() == R.id.btn_Add){
+        if (view.getId() == R.id.btn_Start){
             if (onViewCallBack != null){
                 setStart(true);
-                onViewCallBack.onViewAdd();
+                onViewCallBack.onD3Start();
             }
-        }else if (view.getId() == R.id.btn_Remove){
+        }else if (view.getId() == R.id.btn_Stop){
             if (onViewCallBack != null){
                 setStart(false);
-                onViewCallBack.onViewRemove();
+                onViewCallBack.onD3Stop();
             }
         }else if (view.getId() == R.id.btn_Tare){
             if (onViewCallBack != null){
-                onViewCallBack.onViewTare();
+                onViewCallBack.onD3Tare();
             }
         }else if (view.getId() == R.id.btn_Zero){
             if (onViewCallBack != null){
-                onViewCallBack.onViewZero();
+                onViewCallBack.onD3Zero();
+            }
+        }else if (view.getId() == R.id.btn_CalibPara){
+            if (onViewCallBack != null){
+                onViewCallBack.onD3Calib();
+            }
+        }else if (view.getId() == R.id.btn_SysSet){
+            if (onViewCallBack != null){
+                onViewCallBack.onD3SysSet();
             }
         }
     }
 
     public void setStart(boolean start) {
         isStart = start;
-        btn_Add.setTextColor(isStart ? Color.RED : Color.BLACK);
+        btn_Start.setTextColor(isStart ? Color.RED : Color.BLACK);
     }
 
     public void setOnViewCallBack(D3View.OnActionListener onViewCallBack) {

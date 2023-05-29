@@ -6,23 +6,24 @@ import java.util.HashMap;
 
 public class Command {
 
-    public static final int readInfo   = 0x01;
-    /*public static final int readCiols  = 0x02;
-    public static final int writeCiol  = 0x03;
-    public static final int writeCiols = 0x04;
-    public static final int readCalib  = 0x05;
-    public static final int writeCalib = 0x06;*/
-
+    public static final int readInfo= 0x01;
     public static final int ZERO    = 0x08;
     public static final int TARE    = 0x09;
     public static final int Lock    = 0x0A;
     public static final int UnLock  = 0x0B;
     public static final int Sum     = 0x0C;
     public static final int UnSum   = 0x0D;
-    /*public static final int calibZero  = 0x0B;
-    public static final int calibWeigh = 0x0C;
-    public static final int switchRate = 0x0D;
-    public static final int clearRate  = 0x0E;*/
+
+    public static final int ReadCalib  = 0x030030;
+    public static final int WriteCalib = 0x0F0030;
+
+    public static final int ReadSys  = 0x030041;
+    public static final int WriteSys = 0x0F0041;
+
+    public static final int CalibZero  = 0x0B;
+    public static final int CalibWeigh = 0x0C;
+    public static final int SwitchRate = 0x0D;
+    public static final int ClearRate  = 0x0E;
 
     private static HashMap<Integer, ReqModbus> CMD = new HashMap<Integer, ReqModbus>(){{
         put(readInfo,   new ReqModbus(readInfo,0x04, 0x0000, 8));
@@ -38,6 +39,12 @@ public class Command {
         put(UnLock, new ReqModbus(UnLock,0x05, 0x000B, new boolean[]{true}));
         put(Sum,    new ReqModbus(Sum,  0x05, 0x000C, new boolean[]{true}));
         put(UnSum,  new ReqModbus(UnSum, 0x05, 0x000D, new boolean[]{true}));
+
+        put(ReadCalib,  new ReqModbus(ReadCalib,    0x03, 0x0031, 5));
+        put(WriteCalib, new ReqModbus(WriteCalib,   0x0F, 0x0031, new short[]{}));
+        put(ReadSys,    new ReqModbus(ReadSys,      0x03, 0x0041, 25));
+        put(WriteSys,   new ReqModbus(WriteSys,     0x0F, 0x0041, new short[]{}));
+
         /*put(calibZero,  new ReqModbus(calibZero, 0x10, 0x4743, new short[]{0x4743, 0x3030, (short) 0xCFCF, 0x0001, 0x0000}));
         put(calibWeigh, new ReqModbus(calibWeigh, 0x10, 0x4743, new short[]{0x4743, 0x3131, (short) 0xCECE, 0x0003, 0x0000, 0x0000}));
         put(switchRate, new ReqModbus(switchRate, 0x10, 0x4743, new short[]{0x4743, 0x4040, (short) 0xBFBF, 0x0002, 0x0000, 0x0000}));
