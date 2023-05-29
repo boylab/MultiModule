@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity implements OnCellListener {
         /**
          * 1、程序启动，开启模块读写
          */
-        if (PhoneUtil.isPad(this)){
-            cellManager.startEngine();
-        }
+        cellManager.startEngine();
 
         /**
          * 2、第一个模块

@@ -19,7 +19,7 @@ public class SysSetActivity extends AppCompatActivity implements View.OnClickLis
 
     private RecyclerView rv_SysSet;
     private SysSetAdapter SysSetAdapter;
-    private List<String> valueList = new ArrayList<>();
+    private List<Integer> valueList = new ArrayList<>();
 
     private Button btn_Read, btn_Save;
     private int slaveId = 0;

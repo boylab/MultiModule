@@ -92,6 +92,9 @@ public class CellManager {
      * @param onCellListener
      */
     public void setOnCellListener(int slaveId, OnCellListener onCellListener){
+        if (cellHolding == null){
+            return;
+        }
         CellThread cellThread = cellHolding.getCellThread(slaveId);
         if (cellThread != null && !cellThread.isShutdown()){
             cellThread.setOnCellListener(onCellListener);
