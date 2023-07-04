@@ -5,6 +5,7 @@ import android.content.Context;
 import com.gotokeep.keep.taira.Taira;
 import com.gotokeep.keep.taira.TairaData;
 import com.gotokeep.keep.taira.annotation.ParamField;
+import com.gotokeep.keep.taira.exception.TairaAnnotationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,72 +39,77 @@ public class CalibPara extends BasePara<CalibPara> implements TairaData {
 
     public static final int MIN_REQUIRES = 25*2;
 
-    @ParamField(order = 0,length = 2)
+    @ParamField(order = 0,bytes = 2)
     private int div;
 
-    @ParamField(order = 1,length = 2)
+    @ParamField(order = 1,bytes = 2)
     private int point;
 
-    @ParamField(order = 2,length = 2)
+    @ParamField(order = 2,bytes = 2)
     private int unit;
 
-    @ParamField(order = 3,length = 4)
+    @ParamField(order = 3,bytes = 4)
     private int fullScale;
 
-    @ParamField(order = 4,length = 2)
+    @ParamField(order = 4,bytes = 2)
     private int filterMode;
 
-    @ParamField(order = 5,length = 2)
+    @ParamField(order = 5,bytes = 2)
     private int filterStrength;
 
-    @ParamField(order = 6,length = 2)
+    @ParamField(order = 6,bytes = 2)
     private int judgeStable;
 
-    @ParamField(order = 7,length = 2)
+    @ParamField(order = 7,bytes = 2)
     private int bootZero;
 
-    @ParamField(order = 8,length = 2)
+    @ParamField(order = 8,bytes = 2)
     private int manualZero;
 
-    @ParamField(order = 9,length = 2)
+    @ParamField(order = 9,bytes = 2)
     private int zeroTraceMode;
 
-    @ParamField(order = 10,length = 2)
+    @ParamField(order = 10,bytes = 2)
     private int zeroTraceRange;
 
-    @ParamField(order = 11,length = 2)
+    @ParamField(order = 11,bytes = 2)
     private int zeroTraceSpeed;
 
-    @ParamField(order = 12,length = 2)
+    @ParamField(order = 12,bytes = 2)
     private int creepMode;
 
-    @ParamField(order = 13,length = 2)
+    @ParamField(order = 13,bytes = 2)
     private int empty;
 
-    @ParamField(order = 14,length = 4)
+    @ParamField(order = 14,bytes = 4)
     private int calibZero;
 
-    @ParamField(order = 15,length = 4)
+    @ParamField(order = 15,bytes = 4)
     private int calibCoe;
 
-    @ParamField(order = 16,length = 4)
+    @ParamField(order = 16,bytes = 4)
     private int gravity;
 
-    @ParamField(order = 17,length = 4)
+    @ParamField(order = 17,bytes = 4)
     private int scale1;
 
-    @ParamField(order = 18,length = 4)
+    @ParamField(order = 18,bytes = 4)
     private int scale2;
 
     @Override
     public void toPara(byte[] data) {
-        if (data != null & data.length >= MIN_REQUIRES){
-            CalibPara calibPara = Taira.DEFAULT.fromBytes(data, CalibPara.class);
-            setReaded(calibPara != null);
-            if (calibPara != null){
-                freshPara(calibPara);
-                //Log.i("___boylab>>>___", "toPara: calibPara = "+calibPara.toString());
+        if (data != null && data.length >= MIN_REQUIRES){
+            try {
+                CalibPara calibPara = Taira.DEFAULT.fromBytes(data, CalibPara.class);
+                setReaded(calibPara != null);
+                if (calibPara != null){
+                    freshPara(calibPara);
+                    //Log.i("___boylab>>>___", "toPara: calibPara = "+calibPara.toString());
+                }
+            }catch (TairaAnnotationException e){
+                e.printStackTrace();
             }
+
         }
     }
 

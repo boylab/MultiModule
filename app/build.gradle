@@ -48,6 +48,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.gotokeep.keep:taira:0.1.4'
     implementation files('libs/serialport.aar')
+    implementation project(path: ':DialogX')
+    implementation project(path: ':DialogXMIUIStyle')
     implementation 'com.github.infiniteautomation:modbus4j:v3.0.5'
     implementation 'com.github.boylab:SmartSpinner:1.0.9'
+    //implementation "com.kongzue.dialogx:DialogX:0.0.48"
 }

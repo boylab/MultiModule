@@ -40,10 +40,10 @@ public class Command {
         put(Sum,    new ReqModbus(Sum,  0x05, 0x000C, new boolean[]{true}));
         put(UnSum,  new ReqModbus(UnSum, 0x05, 0x000D, new boolean[]{true}));
 
-        put(ReadCalib,  new ReqModbus(ReadCalib,    0x03, 0x0031, 5));
-        put(WriteCalib, new ReqModbus(WriteCalib,   0x0F, 0x0031, new short[]{}));
-        put(ReadSys,    new ReqModbus(ReadSys,      0x03, 0x0041, 25));
-        put(WriteSys,   new ReqModbus(WriteSys,     0x0F, 0x0041, new short[]{}));
+        put(ReadSys,    new ReqModbus(ReadSys,   0x03, 0x0030, 5));
+        put(WriteSys,   new ReqModbus(WriteSys,  0x0F, 0x0031, new short[]{}));
+        put(ReadCalib,  new ReqModbus(ReadCalib, 0x03, 0x0041, 25));
+        put(WriteCalib, new ReqModbus(WriteCalib,0x0F, 0x0041, new short[]{}));
 
         /*put(calibZero,  new ReqModbus(calibZero, 0x10, 0x4743, new short[]{0x4743, 0x3030, (short) 0xCFCF, 0x0001, 0x0000}));
         put(calibWeigh, new ReqModbus(calibWeigh, 0x10, 0x4743, new short[]{0x4743, 0x3131, (short) 0xCECE, 0x0003, 0x0000, 0x0000}));

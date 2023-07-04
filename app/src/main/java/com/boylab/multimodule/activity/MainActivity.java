@@ -10,12 +10,15 @@ import com.boylab.multimodule.R;
 import com.boylab.multimodule.modbus.data.WeighSign1;
 import com.boylab.multimodule.modbus.data.WeightInfo;
 import com.boylab.multimodule.modbus.socket.CellManager;
+import com.boylab.multimodule.modbus.socket.Command;
 import com.boylab.multimodule.modbus.socket.OnCellListener;
 import com.boylab.multimodule.util.PhoneUtil;
 import com.boylab.multimodule.view.D3View;
+import com.kongzue.dialogx.DialogX;
+import com.kongzue.dialogx.style.MIUIStyle;
 import com.serotonin.modbus4j.msg.ModbusResponse;
 
-public class MainActivity extends AppCompatActivity implements OnCellListener {
+public class MainActivity extends BaseActivity implements OnCellListener {
 
     private CellManager cellManager = CellManager.instance();
 
@@ -23,9 +26,12 @@ public class MainActivity extends AppCompatActivity implements OnCellListener {
     private final int slaveId_01 = 1,  slaveId_02 = 2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getContentView() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         d3View01 = findViewById(R.id.d3View01);
         d3View02 = findViewById(R.id.d3View02);
 
@@ -119,6 +125,11 @@ public class MainActivity extends AppCompatActivity implements OnCellListener {
     }
 
     @Override
+    protected void initData() {
+        DialogX.globalStyle = MIUIStyle.style();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         cellManager.setOnCellListener(slaveId_01, this);
@@ -155,7 +166,21 @@ public class MainActivity extends AppCompatActivity implements OnCellListener {
 
     @Override
     public void onCellAction(int slaveId, int what, ModbusResponse modbusResponse) {
+        //Log.i(">>>boylab>>>", "onCellAction: "+Integer.toHexString(what));
+        if (what == Command.TARE){
 
+            if (slaveId == slaveId_01){
+
+            }else if (slaveId == slaveId_02){
+
+            }
+        }else if (what == Command.ZERO){
+            if (slaveId == slaveId_01){
+
+            }else if (slaveId == slaveId_02){
+
+            }
+        }
     }
 
     @Override

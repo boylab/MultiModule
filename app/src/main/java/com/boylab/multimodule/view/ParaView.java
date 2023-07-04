@@ -81,6 +81,14 @@ public class ParaView extends RelativeLayout implements View.OnClickListener, On
         }
     }
 
+    public void setValue(String value){
+        if (isSelect()){
+            //spinner_Value.setSelection(value);
+        }else {
+            btn_Value.setText(value);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Value){

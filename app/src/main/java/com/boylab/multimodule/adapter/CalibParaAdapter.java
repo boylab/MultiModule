@@ -1,5 +1,6 @@
 package com.boylab.multimodule.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.boylab.multimodule.R;
 import com.boylab.multimodule.bean.ParaItem;
 import com.boylab.multimodule.view.ParaView;
+import com.kongzue.dialogx.dialogs.InputDialog;
+import com.kongzue.dialogx.dialogs.TipDialog;
+import com.kongzue.dialogx.dialogs.WaitDialog;
+import com.kongzue.dialogx.interfaces.OnInputDialogButtonClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +64,16 @@ public class CalibParaAdapter extends RecyclerView.Adapter<CalibParaAdapter.MyVi
         add(new ParaItem("分度值切换点"));
         add(new ParaItem("分度值切换点"));
     }};
+    private List<Integer> valueList = null;
 
     public CalibParaAdapter(Context context, List<Integer> valueList) {
         this.layoutInflater = LayoutInflater.from(context);
-        if (paraList.size() == valueList.size()){
+        this.valueList = valueList;
+        /*if (paraList.size() == valueList.size()){
             for (int i = 0; i < paraList.size(); i++) {
                 this.paraList.get(i).setValue(valueList.get(i));
             }
-        }
+        }*/
     }
 
     @NonNull
@@ -77,15 +84,83 @@ public class CalibParaAdapter extends RecyclerView.Adapter<CalibParaAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MyViewholder holder, @SuppressLint("RecyclerView") int position) {
         ParaItem paraBean = paraList.get(position);
         boolean isSelect = paraBean.isSelect();
         if (isSelect){
             holder.paraView.setSelect(paraBean.getList());
         }
+        holder.paraView.setTag(position);
         holder.paraView.setLabel(paraBean.getLabel());
-        holder.paraView.setValue(paraBean.getValue());
+
+        if (position == 3){
+            int point = valueList.get(1);
+            double scale = valueList.get(position)/Math.pow(10,point);
+            String value = String.format("%6.2f", scale).trim();
+            holder.paraView.setValue(value);
+        }else if (position < valueList.size()){
+            holder.paraView.setValue(valueList.get(position));
+        }
+        if (position < 14){
+            holder.paraView.setOnParaListener(new ParaView.OnParaListener() {
+                @Override
+                public void onParaClick(ParaView v) {
+                    int index = (int) v.getTag();
+                    String label = paraList.get(index).getLabel();
+                    String value = "";
+                    if (index == 3){
+                        int point = valueList.get(1);
+                        double scale = valueList.get(position)/Math.pow(10,point);
+                        value = String.format("%6.2f", scale).trim();
+                    }else {
+                        value = String.valueOf(valueList.get(position));
+                    }
+                    new InputDialog("温馨提示", "输入"+label, "确定", "取消")
+                            .setInputText(value)
+                            .setOkButton(new OnInputDialogButtonClickListener<InputDialog>() {
+                                @Override
+                                public boolean onClick(InputDialog baseDialog, View v, String inputStr) {
+                                    if (index == 3){
+                                        int point = valueList.get(1);
+                                        String regx = "^[0-9]+(\\.[0-9]{0,"+point+"})?$";
+                                        if (inputStr.matches(regx)){
+                                            double value = Double.parseDouble(inputStr);
+                                            int scale = (int) (value * Math.pow(10, point));
+                                            valueList.set(index, scale);
+                                        }else {
+                                            TipDialog.show("请输入数字", WaitDialog.TYPE.ERROR);
+                                        }
+                                    }else if (index == 7 || index == 8){
+                                        String regx = "[0-9]+";
+                                        if (inputStr.matches(regx)){
+                                            int value = Integer.parseInt(inputStr);
+                                            if (value >=0 && value <=100){
+                                                TipDialog.show("输入成功", WaitDialog.TYPE.SUCCESS);
+                                            }else {
+                                                TipDialog.show("请输入0-100", WaitDialog.TYPE.ERROR);
+                                            }
+                                        }else {
+                                            TipDialog.show("请输入数字", WaitDialog.TYPE.ERROR);
+                                        }
+                                    }
+                                    notifyDataSetChanged();
+                                    return false;
+                                }
+                            })
+                            .show();
+                }
+
+                @Override
+                public void onParaSelect(ParaView v, int itemPosition) {
+                    int index = (int) v.getTag();
+                    if (position < valueList.size()){
+                        valueList.set(index, itemPosition);
+                    }
+                }
+            });
+        }else {
+            //TipDialog.show("暂不可修改");
+        }
     }
 
     @Override

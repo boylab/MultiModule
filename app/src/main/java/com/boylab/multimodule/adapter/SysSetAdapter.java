@@ -1,5 +1,6 @@
 package com.boylab.multimodule.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.boylab.multimodule.R;
 import com.boylab.multimodule.bean.ParaItem;
 import com.boylab.multimodule.view.ParaView;
+import com.kongzue.dialogx.dialogs.InputDialog;
+import com.kongzue.dialogx.dialogs.TipDialog;
+import com.kongzue.dialogx.dialogs.WaitDialog;
+import com.kongzue.dialogx.interfaces.OnInputDialogButtonClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +36,16 @@ public class SysSetAdapter extends RecyclerView.Adapter<SysSetAdapter.MyViewhold
         add(new ParaItem("通讯地址"));
         add(new ParaItem("通讯发送延时"));
     }};
+    private List<Integer> valueList = null;
 
     public SysSetAdapter(Context context, List<Integer> valueList) {
         this.layoutInflater = LayoutInflater.from(context);
-        if (paraList.size() == valueList.size()){
+        this.valueList = valueList;
+        /*if (paraList.size() == valueList.size()){
             for (int i = 0; i < paraList.size(); i++) {
                 this.paraList.get(i).setValue(valueList.get(i));
             }
-        }
+        }*/
     }
 
     @NonNull
@@ -49,14 +56,66 @@ public class SysSetAdapter extends RecyclerView.Adapter<SysSetAdapter.MyViewhold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewholder holder, @SuppressLint("RecyclerView") int position) {
 
         ParaItem paraBean = paraList.get(position);
         boolean isSelect = paraBean.isSelect();
         if (isSelect){
             holder.paraView.setSelect(paraBean.getList());
         }
-        holder.paraView.setValue(paraBean.getValue());
+        holder.paraView.setTag(position);
+        holder.paraView.setLabel(paraBean.getLabel());
+        if (position < valueList.size()){
+            holder.paraView.setValue(valueList.get(position));
+        }
+
+        holder.paraView.setOnParaListener(new ParaView.OnParaListener() {
+            @Override
+            public void onParaClick(ParaView v) {
+                int index = (int) v.getTag();
+                String label = paraList.get(index).getLabel();
+                int value = valueList.get(position);
+                new InputDialog("温馨提示", "输入"+label, "确定", "取消")
+                        .setInputText(String.valueOf(value))
+                        .setOkButton(new OnInputDialogButtonClickListener<InputDialog>() {
+                            @Override
+                            public boolean onClick(InputDialog baseDialog, View v, String inputStr) {
+                                String regx = "[0-9]+";
+                                if (inputStr.matches(regx)){
+                                    int value = Integer.parseInt(inputStr);
+                                    if (index == paraList.size() - 2){
+                                        if (value >=1 && value <=247){
+                                            TipDialog.show("输入成功", WaitDialog.TYPE.SUCCESS);
+                                            valueList.set(paraList.size() - 2, value);
+                                        }else {
+                                            TipDialog.show("输入失败，请输入1-247", WaitDialog.TYPE.ERROR);
+                                        }
+                                    }else if (index == paraList.size() - 1){
+                                        if (value >=0 && value <=255){
+                                            TipDialog.show("输入成功", WaitDialog.TYPE.SUCCESS);
+                                            valueList.set(paraList.size() - 1, value);
+                                        }else {
+                                            TipDialog.show("输入失败，请输入0-255", WaitDialog.TYPE.ERROR);
+                                        }
+                                    }
+                                }else {
+                                    TipDialog.show("输入失败，请输入数字", WaitDialog.TYPE.ERROR);
+                                }
+                                notifyDataSetChanged();
+                                return false;
+                            }
+                        })
+                        .show();
+            }
+
+            @Override
+            public void onParaSelect(ParaView v, int itemPosition) {
+                int index = (int) v.getTag();
+                if (position < valueList.size()){
+                    valueList.set(index, itemPosition);
+                }
+            }
+        });
     }
 
     @Override

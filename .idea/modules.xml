@@ -3,6 +3,17 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MultiModule.iml" filepath="$PROJECT_DIR$/.idea/modules/MultiModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXInterface/MultiModule.DialogXInterface.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXInterface/MultiModule.DialogXInterface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXInterface/MultiModule.DialogXInterface.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXInterface/MultiModule.DialogXInterface.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXInterface/MultiModule.DialogXInterface.test.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXInterface/MultiModule.DialogXInterface.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogXMIUIStyle/MultiModule.DialogXMIUIStyle.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MultiModule.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MultiModule.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MultiModule.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MultiModule.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MultiModule.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MultiModule.app.main.iml" />

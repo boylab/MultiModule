@@ -17,19 +17,19 @@ public class SysSetBean extends BasePara<SysSetBean> implements TairaData {
 
     public static final int MIN_REQUIRES = 5*2;
 
-    @ParamField(order = 0,length = 2)
+    @ParamField(order = 0,bytes = 2)
     private int commMode;
 
-    @ParamField(order = 1,length = 2)
+    @ParamField(order = 1,bytes = 2)
     private int baud;
 
-    @ParamField(order = 2,length = 2)
+    @ParamField(order = 2,bytes = 2)
     private int parity;
 
-    @ParamField(order = 3,length = 2)
+    @ParamField(order = 3,bytes = 2)
     private int addr;
 
-    @ParamField(order = 4,length = 2)
+    @ParamField(order = 4,bytes = 2)
     private int delay;
 
     @Override
@@ -92,14 +92,6 @@ public class SysSetBean extends BasePara<SysSetBean> implements TairaData {
         setParity(sysSetList.get(2));
         setAddr(sysSetList.get(3));
         setDelay(sysSetList.get(4));
-    }
-
-    public SysSetBean(int commMode, int baud, int parity, int addr, int delay) {
-        this.commMode = commMode;
-        this.baud = baud;
-        this.parity = parity;
-        this.addr = addr;
-        this.delay = delay;
     }
 
     public int getCommMode() {
