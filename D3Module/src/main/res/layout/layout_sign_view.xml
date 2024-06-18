@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:background="@drawable/shape_d3view_bg">
+
+    <CheckBox
+        android:id="@+id/box_Stable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:gravity="center"
+        android:drawableTop="@drawable/state_selector"
+        android:text="稳定"/>
+
+    <CheckBox
+        android:id="@+id/box_Tare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/box_Stable"
+        android:layout_marginLeft="20dp"
+        android:button="@null"
+        android:gravity="center"
+        android:drawableTop="@drawable/state_selector"
+        android:text="去皮"/>
+
+    <CheckBox
+        android:id="@+id/box_Zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/box_Tare"
+        android:layout_marginLeft="20dp"
+        android:button="@null"
+        android:gravity="center"
+        android:drawableTop="@drawable/state_selector"
+        android:text="置零"/>
+
+</RelativeLayout>

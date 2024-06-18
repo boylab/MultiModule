@@ -2,5 +2,6 @@ include ':app'
 include ':DialogX'
 include ':DialogXInterface'
 include ':DialogXMIUIStyle'
+include ':D3Module'
 
 rootProject.name = "MultiModule"

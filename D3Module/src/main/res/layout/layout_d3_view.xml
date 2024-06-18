@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_d3view_bg">
+
+    <com.boylab.multimodule.view.WeighView
+        android:id="@+id/netWeight"
+        android:layout_width="160dp"
+        android:layout_height="140dp"/>
+
+    <com.boylab.multimodule.view.WeighView
+        android:id="@+id/grossWeight"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:layout_toRightOf="@+id/netWeight"/>
+
+    <com.boylab.multimodule.view.WeighView
+        android:id="@+id/tareWeight"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:layout_toRightOf="@+id/netWeight"
+        android:layout_below="@+id/grossWeight"/>
+
+    <com.boylab.multimodule.view.SignView
+        android:id="@+id/signView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/netWeight"
+        android:layout_alignBottom="@+id/netWeight"/>
+
+    <com.boylab.multimodule.view.ActionView
+        android:id="@+id/actionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/netWeight"
+        android:layout_alignLeft="@+id/netWeight"
+        android:layout_alignRight="@+id/grossWeight"/>
+
+</RelativeLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_d3view_bg"
+    android:padding="10dp">
+
+    <Button
+        android:id="@+id/btn_Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="08dp"
+        android:ems="5"
+        android:text="启动"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn_Stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingVertical="08dp"
+        android:ems="5"
+        android:text="停止"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn_Tare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_Start"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="08dp"
+        android:ems="5"
+        android:text="去皮"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn_Zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_Stop"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="08dp"
+        android:ems="5"
+        android:text="置零"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn_CalibPara"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_Tare"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="08dp"
+        android:ems="5"
+        android:text="标定参数"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn_SysSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_Zero"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="08dp"
+        android:ems="5"
+        android:text="系统设置"
+        android:textSize="22sp" />
+
+</RelativeLayout>

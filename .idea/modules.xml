@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MultiModule.iml" filepath="$PROJECT_DIR$/.idea/modules/MultiModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.iml" filepath="$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.main.iml" filepath="$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/D3Module/MultiModule.D3Module.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DialogX/MultiModule.DialogX.main.iml" />
